@@ -33,23 +33,43 @@ class TodoList {
         
         
         addTodo(row0Item, with: .medium)
-        addTodo(row1Item, with: .medium)
-        addTodo(row2Item, with: .medium)
-        addTodo(row3Item, with: .medium)
-        addTodo(row4Item, with: .medium)
+        addTodo(row1Item, with: .low)
+        addTodo(row2Item, with: .high)
+        addTodo(row3Item, with: .no)
+        addTodo(row4Item, with: .high)
         
     }
     
-    func addTodo(_ item: ChecklistItem, with priority: Priority) {
+    func addTodo(_ item: ChecklistItem, with priority: Priority, at index : Int = -1) {
         switch priority {
         case .high:
-            highPriorityTodolist.append(item)
+            if index < 0 {
+                highPriorityTodolist.append(item)
+            }
+            else {
+               highPriorityTodolist.insert(item, at: index)
+            }
         case .medium:
-            mediumPriorityTodolist.append(item)
+            if index < 0 {
+                mediumPriorityTodolist.append(item)
+            }
+            else {
+                mediumPriorityTodolist.insert(item, at: index)
+            }
         case .low:
-            lowPriorityTodolist.append(item)
+            if index < 0 {
+                lowPriorityTodolist.append(item)
+            }
+            else {
+                lowPriorityTodolist.insert(item, at: index)
+            }
         case .no:
-            noPriorityTodolist.append(item)
+            if index < 0 {
+                noPriorityTodolist.append(item)
+            }
+            else {
+                noPriorityTodolist.insert(item, at: index)
+            }
         }
     }
     
@@ -74,12 +94,9 @@ class TodoList {
         return newchecklistItem
     }
     
-    func move(item: ChecklistItem, to index: Int) {
-//        guard let currentIndex = todos.index(of: item) else{
-//            return
-//        }
-//        todos.remove(at: currentIndex)
-//        todos.insert(item, at: index)
+    func move(item: ChecklistItem, from sourcePriority: Priority, at sourceIndex: Int, to destinationPriority: Priority, at destinationIndex: Int) {
+        remove(item, from: sourcePriority, at: sourceIndex)
+        addTodo(item, with: destinationPriority, at: destinationIndex)
     }
     
     func remove(_ item: ChecklistItem, from priority: Priority, at index: Int) {
